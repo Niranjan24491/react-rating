@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./rating.scss";
 
-class Rating extends Component {
+export default class Rating extends Component {
   constructor(props) {
     super(props);
   }
@@ -16,32 +16,34 @@ class Rating extends Component {
   };
 
   drawFilledState = () => {
-    return ((rows, i, len) => {
+    const { rating, ratingType } = this.props;
+    return ((array, i, len) => {
       while (++i <= rating) {
-        rows.push(
+        array.push(
           <div
             id={i}
-            style={this.filledRatingColor(this.props)}
+            style={this.filledRatingColor()}
             className={`filled-class-${ratingType}`}
           />
         );
       }
-      return rows;
+      return array;
     })([], 0, 10);
   };
 
   drawNonFilledState = () => {
-    return ((rows, i, len) => {
+    const { rating, maxRange } = this.props;
+    return ((array, i, len) => {
       while (++i <= maxRange - rating) {
-        rows.push(
+        array.push(
           <div
             id={i}
-            style={this.nonFilledRatingColor(this.props)}
+            style={this.nonFilledRatingColor()}
             className={`no-filled-class-${this.props.ratingType}`}
           />
         );
       }
-      return rows;
+      return array;
     })([], 0, 10);
   };
   onRatingHover = () => {
@@ -85,13 +87,18 @@ class Rating extends Component {
 
   render() {
     const {
-      textPosition = "rating-structure-right",
+      textPosition,
       tooltip,
       rating,
       ratingType,
       maxRange,
       ratingName
     } = this.props;
+
+    const structureClass =
+      textPosition === "left"
+        ? "rating-structure-left"
+        : "rating-structure-right";
     return (
       <div className="rating-parent">
         {textPosition === "right" && (
@@ -116,5 +123,3 @@ class Rating extends Component {
     );
   }
 }
-
-export default Rating;
