@@ -14,18 +14,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx$/, // test: /\.(js|jsx)$/,
-        exclude: /node_modules/, // exclude: /(node_modules|bower_components)/,
-        use: "babel-loader",
-        // options: {
-        //     presets: ['@babel/preset-env']
-        // }
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["es2015"]
-          }
-        }
+        test: /\.jsx$/,
+        use: ["babel-loader"],
+        include: [path.resolve(__dirname, "src")]
       },
       {
         test: /\.scss$/,
