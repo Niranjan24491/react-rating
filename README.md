@@ -5,7 +5,7 @@ Customise react components with react-rating component which can be used for add
 #SetUp
 
 ```
-npm install --save react-rating
+npm install --save react-rating-component
 ```
 
 #default Usage

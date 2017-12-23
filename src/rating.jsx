@@ -60,22 +60,27 @@ export default class Rating extends Component {
       return array;
     })([], 0, 10);
   };
+
   onRatingHover = () => {
     const {
       rating = RATING,
       maxRange = MAX_RANGE,
       ratingValues = RATING_VALUE
     } = this.props;
-    const rangeValue = Math.floor(rating / maxRange * 10);
-    if (rangeValue >= 0 && rangeValue <= 4) {
-      return ratingValues[0];
-    } else if (rangeValue > 4 && rangeValue <= 6) {
-      return ratingValues[1];
-    } else if (rangeValue > 6 && rangeValue <= 9) {
-      return ratingValues[2];
-    } else if (rangeValue > 9) {
-      return ratingValues[3];
+    if (!rating || !maxRange || rating > maxRange) {
+      throw new Error("Invalid input");
     }
+
+    if (rating === maxRange) {
+      return RATING_VALUE[RATING_VALUE.length - 1];
+    }
+
+    const score = rating / maxRange / RATING_VALUE.length * 10;
+    const scoreClone = score;
+    const isGreaterThanHalf = score % 1 > 0.5;
+    const roundingFunction = isGreaterThanHalf ? Math.ceil : Math.floor;
+
+    return RATING_VALUE[roundingFunction(score)];
   };
 
   filledRatingColor = () => {
