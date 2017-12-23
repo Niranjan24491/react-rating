@@ -1,0 +1,95 @@
+.rating-parent {
+  display: inline-block;
+  width: 100%;
+}
+
+.rating-name {
+  display: inline-block;
+  font-size: 15px;
+  width: auto;
+  margin-right: 3%;
+  margin-left: 3%;
+}
+
+.rating-structure-right {
+  display: inline-flex;
+}
+
+.rating-structure-left {
+  display: inline-flex;
+  margin-right: 2%;
+
+  div {
+    float: right;
+  }
+}
+
+.filled-class-circle {
+  display: inline-block;
+  width: 17px;
+  height: 13px;
+  margin: 1%;
+  border-radius: 50%;
+  transition: background-color 11.5s ease;
+}
+
+.no-filled-class-circle {
+  display: inline-block;
+  width: 17px;
+  height: 13px;
+  margin: 1%;
+  border-radius: 50%;
+}
+
+.filled-class-square {
+  display: inline-block;
+  width: 17px;
+  height: 13px;
+  margin: 1%;
+  transition: background-color 11.5s ease;
+}
+
+.no-filled-class-square {
+  display: inline-block;
+  width: 17px;
+  height: 13px;
+  margin: 1%;
+}
+
+.no-filled-class-circle {
+  display: inline-block;
+  width: 17px;
+  height: 13px;
+  margin: 1%;
+  border-radius: 50%;
+}
+
+.rating-image {
+}
+
+.rating-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.rating-tooltip .rating-tooltiptext {
+  visibility: hidden;
+  width: auto;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 10px;
+  position: absolute;
+  top: -12px;
+  z-index: 1;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.rating-tooltip:hover .rating-tooltiptext {
+  visibility: visible;
+}
