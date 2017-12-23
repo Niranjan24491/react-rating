@@ -1,13 +1,23 @@
 import React, { Component } from "react";
 import "./rating.scss";
 
+const RATING_VALUE = ["Beginner", "Intermediate", "Advanced", "Expert"],
+  TEXT_POSITION = "right",
+  IS_TOOLTIP = true,
+  RATING = 9,
+  RATING_TYPE = "circle",
+  MAX_RANGE = 10,
+  RATING_NAME = "Rating Name",
+  RATING_COLOR = "#009688",
+  IS_IMAGE = false;
+
 export default class Rating extends Component {
   constructor(props) {
     super(props);
   }
 
   addRateType = () => {
-    const { image, ratingName } = this.props;
+    const { image = IS_IMAGE, ratingName = RATING_NAME } = this.props;
     return image === true ? (
       <img className="rating-image" src={ratingName} />
     ) : (
@@ -16,7 +26,7 @@ export default class Rating extends Component {
   };
 
   drawFilledState = () => {
-    const { rating, ratingType } = this.props;
+    const { rating = RATING, ratingType = RATING_TYPE } = this.props;
     return ((array, i, len) => {
       while (++i <= rating) {
         array.push(
@@ -32,14 +42,18 @@ export default class Rating extends Component {
   };
 
   drawNonFilledState = () => {
-    const { rating, maxRange } = this.props;
+    const {
+      rating = RATING,
+      maxRange = MAX_RANGE,
+      ratingType = RATING_TYPE
+    } = this.props;
     return ((array, i, len) => {
       while (++i <= maxRange - rating) {
         array.push(
           <div
             id={i}
             style={this.nonFilledRatingColor()}
-            className={`no-filled-class-${this.props.ratingType}`}
+            className={`no-filled-class-${ratingType}`}
           />
         );
       }
@@ -47,32 +61,25 @@ export default class Rating extends Component {
     })([], 0, 10);
   };
   onRatingHover = () => {
-    const { rating, maxRange } = this.props;
-    if (maxRange === 10) {
-      if (rating > 0 && rating <= 4) {
-        return "Beginner";
-      } else if (rating > 4 && rating <= 6) {
-        return "Intermediate";
-      } else if (rating > 6 && rating <= 9) {
-        return "Advanced";
-      } else if (rating > 9) {
-        return "Expert";
-      }
-    } else {
-      if (rating > 0 && rating <= 2) {
-        return "Beginner";
-      } else if (rating > 2 && rating <= 3) {
-        return "Intermediate";
-      } else if (rating > 3 && rating <= 4) {
-        return "Advanced";
-      } else if (rating > 4) {
-        return "Expert";
-      }
+    const {
+      rating = RATING,
+      maxRange = MAX_RANGE,
+      ratingValues = RATING_VALUE
+    } = this.props;
+    const rangeValue = Math.floor(rating / maxRange * 10);
+    if (rangeValue >= 0 && rangeValue <= 4) {
+      return ratingValues[0];
+    } else if (rangeValue > 4 && rangeValue <= 6) {
+      return ratingValues[1];
+    } else if (rangeValue > 6 && rangeValue <= 9) {
+      return ratingValues[2];
+    } else if (rangeValue > 9) {
+      return ratingValues[3];
     }
   };
 
   filledRatingColor = () => {
-    const { color } = this.props;
+    const { color = RATING_COLOR } = this.props;
     return {
       border: `1px solid ${color}`,
       "background-color": color
@@ -81,18 +88,18 @@ export default class Rating extends Component {
 
   nonFilledRatingColor = () => {
     return {
-      border: `1px solid ${this.props.color}`
+      border: `1px solid ${this.props.color || RATING_COLOR}`
     };
   };
 
   render() {
     const {
-      textPosition,
-      tooltip,
-      rating,
-      ratingType,
-      maxRange,
-      ratingName
+      textPosition = TEXT_POSITION,
+      tooltip = IS_TOOLTIP,
+      rating = RATING,
+      ratingType = RATING_TYPE,
+      maxRange = MAX_RANGE,
+      ratingName = RATING_NAME
     } = this.props;
 
     const structureClass =
@@ -102,13 +109,11 @@ export default class Rating extends Component {
     return (
       <div className="rating-parent">
         {textPosition === "right" && (
-          <div className="rating-name">{this.addRateType(this.props)}</div>
+          <div className="rating-name">{this.addRateType()}</div>
         )}
         <div class="rating-tooltip">
           {tooltip && (
-            <span class="rating-tooltiptext">
-              {this.onRatingHover(this.props)}
-            </span>
+            <span class="rating-tooltiptext">{this.onRatingHover()}</span>
           )}
           <div className={structureClass} totalRating={rating}>
             {textPosition === "left" && this.drawFilledState()}
