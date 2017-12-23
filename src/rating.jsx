@@ -4,22 +4,48 @@ import "./rating.scss";
 class Rating extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      ratingStructureClass: "rating-structure-right"
-    };
   }
 
-  addRateType(props) {
-    if (props.image === true) {
-      return <img className="rating-image" src={props.ratingName} />;
-    } else {
-      return props.ratingName;
-    }
-  }
+  addRateType = () => {
+    const { image, ratingName } = this.props;
+    return image === true ? (
+      <img className="rating-image" src={ratingName} />
+    ) : (
+      ratingName
+    );
+  };
 
-  onRatingHover(props) {
-    const rating = props.rating;
-    const maxRange = props.maxRange;
+  drawFilledState = () => {
+    return ((rows, i, len) => {
+      while (++i <= rating) {
+        rows.push(
+          <div
+            id={i}
+            style={this.filledRatingColor(this.props)}
+            className={`filled-class-${ratingType}`}
+          />
+        );
+      }
+      return rows;
+    })([], 0, 10);
+  };
+
+  drawNonFilledState = () => {
+    return ((rows, i, len) => {
+      while (++i <= maxRange - rating) {
+        rows.push(
+          <div
+            id={i}
+            style={this.nonFilledRatingColor(this.props)}
+            className={`no-filled-class-${this.props.ratingType}`}
+          />
+        );
+      }
+      return rows;
+    })([], 0, 10);
+  };
+  onRatingHover = () => {
+    const { rating, maxRange } = this.props;
     if (maxRange === 10) {
       if (rating > 0 && rating <= 4) {
         return "Beginner";
@@ -41,80 +67,50 @@ class Rating extends Component {
         return "Expert";
       }
     }
-  }
+  };
 
-  filledRatingColor(props) {
+  filledRatingColor = () => {
+    const { color } = this.props;
     return {
-      border: `1px solid ${props.color}`,
-      "background-color": props.color
+      border: `1px solid ${color}`,
+      "background-color": color
     };
-  }
+  };
 
-  nonFilledRatingColor(props) {
+  nonFilledRatingColor = () => {
     return {
-      border: `1px solid ${props.color}`
+      border: `1px solid ${this.props.color}`
     };
-  }
+  };
 
   render() {
-    let structureClass = this.state.ratingStructureClass;
-    if (this.props.textPosition === "left") {
-      structureClass = "rating-structure-left";
-    }
+    const {
+      textPosition = "rating-structure-right",
+      tooltip,
+      rating,
+      ratingType,
+      maxRange,
+      ratingName
+    } = this.props;
     return (
       <div className="rating-parent">
-        {this.props.textPosition === "right" && (
+        {textPosition === "right" && (
           <div className="rating-name">{this.addRateType(this.props)}</div>
         )}
         <div class="rating-tooltip">
-          {this.props.tooltip && (
+          {tooltip && (
             <span class="rating-tooltiptext">
               {this.onRatingHover(this.props)}
             </span>
           )}
-          <div className={structureClass} totalRating={this.props.rating}>
-            {this.props.textPosition === "left" &&
-              ((rows, i, len) => {
-                while (++i <= this.props.rating) {
-                  rows.push(
-                    <div
-                      id={i}
-                      style={this.filledRatingColor(this.props)}
-                      className={`filled-class-${this.props.ratingType}`}
-                    />
-                  );
-                }
-                return rows;
-              })([], 0, 10)}
-            {((rows, i, len) => {
-              while (++i <= this.props.maxRange - this.props.rating) {
-                rows.push(
-                  <div
-                    id={i}
-                    style={this.nonFilledRatingColor(this.props)}
-                    className={`no-filled-class-${this.props.ratingType}`}
-                  />
-                );
-              }
-              return rows;
-            })([], 0, 10)}
-            {this.props.textPosition === "right" &&
-              ((rows, i, len) => {
-                while (++i <= this.props.rating) {
-                  rows.push(
-                    <div
-                      id={i}
-                      style={this.filledRatingColor(this.props)}
-                      className={`filled-class-${this.props.ratingType}`}
-                    />
-                  );
-                }
-                return rows;
-              })([], 0, 10)}
+          <div className={structureClass} totalRating={rating}>
+            {textPosition === "left" && this.drawFilledState()}
+            {this.drawNonFilledState()}
+            {textPosition === "right" && this.drawFilledState()}
           </div>
         </div>
-        {this.props.textPosition === "left" && (
-          <div className="rating-name">{this.props.ratingName}</div>
+        {textPosition === "left" && (
+          <div className="rating-name">{ratingName}</div>
         )}
       </div>
     );
