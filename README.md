@@ -21,4 +21,5 @@ textPosition={"right" || left}
 tooltip={true || false}
 maxRange={any number}
 color={color of the tile to be displayed}
+ratingValues = [array of 4 values in the order required]
 />
