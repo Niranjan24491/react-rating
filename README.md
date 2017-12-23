@@ -2,16 +2,19 @@
 
 Customise react components with react-rating component which can be used for adding ratings
 
-#usage
+#SetUp
 
 npm install --save react-rating
 
-#defaultValue
+#default Usage
 
+```
 <Rating />
+```
 
 #options passable
 
+```
 <Rating
 ratingType={"circle" || "square"}
 rating={0 - 10}
@@ -23,3 +26,4 @@ maxRange={any number}
 color={color of the tile to be displayed}
 ratingValues = [array of 4 values in the order required]
 />
+```
