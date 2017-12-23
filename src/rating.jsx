@@ -9,15 +9,15 @@ class Rating extends Component {
     };
   }
 
-  addRateType = props => {
+  addRateType(props) {
     if (props.image === true) {
       return <img className="rating-image" src={props.ratingName} />;
     } else {
       return props.ratingName;
     }
-  };
+  }
 
-  onRatingHover = props => {
+  onRatingHover(props) {
     const rating = props.rating;
     const maxRange = props.maxRange;
     if (maxRange === 10) {
@@ -41,20 +41,20 @@ class Rating extends Component {
         return "Expert";
       }
     }
-  };
+  }
 
-  filledRatingColor = props => {
+  filledRatingColor(props) {
     return {
       border: `1px solid ${props.color}`,
       "background-color": props.color
     };
-  };
+  }
 
-  nonFilledRatingColor = props => {
+  nonFilledRatingColor(props) {
     return {
       border: `1px solid ${props.color}`
     };
-  };
+  }
 
   render() {
     let structureClass = this.state.ratingStructureClass;
